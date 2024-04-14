@@ -1,0 +1,123 @@
+[문제]아래의 조건에 해당하는 지역에서 고교 평준화를 시행하고 있고, 이 지역에는 모두 3개의 고등학교 (이하 학교)가 있다. 내년에 학교에 입학할 중학교 3학년 학생 (이하 학생)이 모두 10,000명일 때, 이 학생들을 주어진 가정과 제약 조건에 맞춰 가까운 학교로 배치하는 모듈을 작성한다.[가정]1. 이 지역은 가로 세로 길이가 동일한 정사각형으로 표현되며, 좌측 상단과 우측 하단이 각각 (0,0), (999,999)로 표현된다.2. 이 지역의 학교들은 각각 0과 999 사이의 정수 x, y로 표현되는 좌표 (x,y)상에 위치한다. 학교들은 같은 위치에 있을 수 있다. 이 지역의 학교들은 각각 0, 1, 2 번의 고유 번호(school_index)를 갖는다. 단, 학교의 면적은 없다.3. 이 지역의 학생들은 각각 0과 999 사이의 정수 x, y로 표현되는 좌표 (x,y) 상에서 거주하며, 각 거주지에는 한 명 이상의 학생들이 거주할 수 있다. 학생의 위치와 학교의 위치는 같을 수 있다. 이 지역의 학생들은 각각 0부터 9999의 고유 번호(student_index)를 갖는다.4. 개별 학교는 최대 3,500명까지 신입생을 받을 수 있다. 초과 배정할 경우 패널티가 추가됨.5. 개별 학교와 학생 거주지와의 거리는 직선 거리로 계산한다. (예를 들어, 학교가 (0,0)이고 학생이 (1,1)일 경우 1.414 거리를 갖는다.)[제약]1. 주어진 홍길동.c code에서 미리 정의되어 제공되는 하기 함수들만을 사용하여 학교와 학생에 대한 정보를 얻어야 하고, 학생을 배정해야 한다.2. run_contest()가 호출될 때 마다, 학교의 위치와 학생의 위치는 난수를 통해 변경된다.3. 어떠한 경우에도 main.c는 수정해선 안되며, 홍길동.c 내에서 구현이 이루어져야 한다.
+4. 제공한 함수 이외에 어떠한 외부 라이브러리 함수도 사용할 수 없음. (본인 작성 함수만 사용)
+[제공 함수]
+void get_school_position(int school_index, int* posX, int* posY);> 학교의 좌표를 얻음void get_student_position(int student_index, int* posX, int* posY);> 학생의 좌표를 얻음void set_student_school(int student_index, int school_index);> 학생을 학교에 배정
+
+[평가]1. 모든 학생의 배정 거리 합이 작을수록 높은 점수를 받는다.2. 각각의 학교는 최대 3,500명까지 학생을 배정받을 수 있다. 3,500명을 초과하여 배정하는 경우, (초과 학생수 * 10000)을 패널티로 추가한다. 어떤 학교에도 배정되지 않은 학생이 있을 경우 (무배정 학생수 * 20000)을 패널티로 추가한다.3. 10회의 run_contest()를 수행해 매번 배정된 결과를 합산하여 평가함
+[실격]1. Compile Error 발생시 - 검증 환경은 MSVC 2008이며, 이를 기준으로 Compile Error를 판단2. Run Time Error 발생시3. 무한 Loop 발생시 - Pentium 2GHz, Windows XP, Memory 256MB 시스템에서 run_contest() 함수가 1분 이상 리턴되지 않는 경우
+[FAQ]
+1. 메모리 사용의 제한은 없다.
+2. 외부 라이브러리 API는 전혀 사용할 수 없다.
+[이름.cpp]
+void run_contest(void)
+{
+}
+
+[main.cpp]
+extern int srand(unsigned int);
+extern int rand(void);
+
+
+static int process(int command, int param1, int param2)
+{
+	static int school[3][3];
+	static int student[10000][3];
+
+	int counter;
+
+	switch (command)
+	{
+		case 1: return (school[param1][0]);
+		case 2: return (school[param1][1]);
+		case 3: return (student[param1][0]);
+		case 4: return (student[param1][1]);
+		case 5: student[param1][2] = param2; return (0);
+	}
+
+
+	if (command == 0)
+	{
+		for (counter = 0; counter < 3; counter++)
+		{
+			school[counter][0] = rand() % 1000;
+			school[counter][1] = rand() % 1000;
+		}
+
+		for (counter = 0; counter < 10000; counter++)
+		{
+			student[counter][0] = rand() % 1000;
+			student[counter][1] = rand() % 1000;
+			student[counter][2] = -1;
+		}
+
+		return (0);
+	}
+
+	return (-1);
+}
+
+
+void get_school_position(int school_index, int* posX, int* posY)
+{
+	if ((0 <= school_index) && (school_index < 3))
+	{
+		*posX = process(1, school_index, 0);
+		*posY = process(2, school_index, 0);
+	}
+	else
+	{
+		*posX = -1;
+		*posY = -1;
+	}
+
+	return;
+}
+
+
+void get_student_position(int student_index, int* posX, int* posY)
+{
+	if ((0 <= student_index) && (student_index < 10000))
+	{
+		*posX = process(3, student_index, 0);
+		*posY = process(4, student_index, 0);
+	}
+	else
+	{
+		*posX = -1;
+		*posY = -1;
+	}
+
+	return;
+}
+
+
+void set_student_school(int student_index, int school_index)
+{
+	if ((0 <= student_index) && (student_index < 10000) && (0 <= school_index) && (school_index < 3))
+	{
+		process(5, student_index, school_index);
+	}
+
+	return;
+}
+
+
+void run_contest(void);
+
+
+void main(void)
+{
+	char* idname(void);
+
+	int counter;
+
+	srand(3);
+
+	for (counter = 0; counter < 10; counter++)
+	{
+		process(0, 0, 0);
+		run_contest();
+	}
+
+	return;
+}
