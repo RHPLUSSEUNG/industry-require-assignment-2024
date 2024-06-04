@@ -1,3 +1,29 @@
+A: 0 B: 1 C: 2 D: 3 E: 4 F: 5 G: 6 H: 7 I: 8 J: 9 K: 10 L: 11 M: 12 N: 13 O: 14 P: 15 Q: 16 R: 17 S: 18 T: 19 U: 20 V: 21 W: 22 X: 23 Y: 24 Z: 25
+
+Question]  26진법 산술연산 함수를 구현하시오. (4 Hour)
+A B C ------ Z
+0 1 2 ------ 25
+하나의 26진수는 127자리를 넘지 않고, 숫자개수는 100개를 넘지 않는다.
+주어진 question문자열을 계산하여 answer에 저장하라 
+(결과가 음수일 경우 문자열의 처음에 '-'로 표기할것)
+외부 함수는 사용할수 없다. (#include를 통한 외부 함수 사용 금지)
+
+주의사항) 이름.cpp는 어떤것도 include 할 수 없다, main.cpp는 어떤 경우에서도 수정이 불가하다
+ex)question
+CBA+GRDAGSDZFFDAFERFEFDAFAFGADFA-ERADFDAZDFWEQQ+FAFDCVARFERAFDFAFADFDAF
+
+참고)
+25 다음은 10 근데 25잖아 10 = BA
+26진법은 26이 없다
+[이름.cpp]
+// DO NOT ANY INCLUDE
+#define STRING_SIZE 12800
+void test_main(char answer[STRING_SIZE], const char question[STRING_SIZE]);
+{
+
+}
+
+[main.cpp] 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -57,3 +83,4 @@ int main(void){
 	printf("SCORE = %d\n", SCORE);
 	return 0;
 }
+
