@@ -25,7 +25,7 @@ void my_push(int s)
 
 int my_pop(int s)
 {
-    SCORE++;
+SCORE++;
     return hold = stack[s][--sp[s]];
 }
 
@@ -39,7 +39,7 @@ static void build_data(void)
 {
     for (int c = 0; c < SIZE; c++)
     {
-        stack[0][c] = rand() % 1024;
+		stack[0][c] = rand() % 1024;
     }
     sp[0] = SIZE;
     for (int c = 1; c < 10; c++) sp[c] = 0;
@@ -49,10 +49,10 @@ static void build_data(void)
 int main(void)
 {
     SCORE = 0;
-    for (int c = 0; c < 10; c++)
+    for (int c=0; c < 10; c++)
     {
         build_data();
-        test_main();        
+        test_main();
     }
-    printf("SCORE = %d\n", SCORE);
+    printf("SCORE = %d\n",SCORE);
 }
